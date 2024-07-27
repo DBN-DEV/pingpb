@@ -21,8 +21,6 @@ const _ = grpc.SupportPackageIsVersion8
 const (
 	Collector_PingReport_FullMethodName    = "/collector_grpc.Collector/PingReport"
 	Collector_TcpPingReport_FullMethodName = "/collector_grpc.Collector/TcpPingReport"
-	Collector_FpingReport_FullMethodName   = "/collector_grpc.Collector/FpingReport"
-	Collector_MtrReport_FullMethodName     = "/collector_grpc.Collector/MtrReport"
 )
 
 // CollectorClient is the client API for Collector service.
@@ -31,8 +29,6 @@ const (
 type CollectorClient interface {
 	PingReport(ctx context.Context, in *PingReportReq, opts ...grpc.CallOption) (*Empty, error)
 	TcpPingReport(ctx context.Context, in *TcpPingReportReq, opts ...grpc.CallOption) (*Empty, error)
-	FpingReport(ctx context.Context, in *FPingReportReq, opts ...grpc.CallOption) (*Empty, error)
-	MtrReport(ctx context.Context, in *MTRReportReq, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type collectorClient struct {
@@ -63,34 +59,12 @@ func (c *collectorClient) TcpPingReport(ctx context.Context, in *TcpPingReportRe
 	return out, nil
 }
 
-func (c *collectorClient) FpingReport(ctx context.Context, in *FPingReportReq, opts ...grpc.CallOption) (*Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Empty)
-	err := c.cc.Invoke(ctx, Collector_FpingReport_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *collectorClient) MtrReport(ctx context.Context, in *MTRReportReq, opts ...grpc.CallOption) (*Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Empty)
-	err := c.cc.Invoke(ctx, Collector_MtrReport_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // CollectorServer is the server API for Collector service.
 // All implementations must embed UnimplementedCollectorServer
 // for forward compatibility
 type CollectorServer interface {
 	PingReport(context.Context, *PingReportReq) (*Empty, error)
 	TcpPingReport(context.Context, *TcpPingReportReq) (*Empty, error)
-	FpingReport(context.Context, *FPingReportReq) (*Empty, error)
-	MtrReport(context.Context, *MTRReportReq) (*Empty, error)
 	mustEmbedUnimplementedCollectorServer()
 }
 
@@ -103,12 +77,6 @@ func (UnimplementedCollectorServer) PingReport(context.Context, *PingReportReq) 
 }
 func (UnimplementedCollectorServer) TcpPingReport(context.Context, *TcpPingReportReq) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TcpPingReport not implemented")
-}
-func (UnimplementedCollectorServer) FpingReport(context.Context, *FPingReportReq) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FpingReport not implemented")
-}
-func (UnimplementedCollectorServer) MtrReport(context.Context, *MTRReportReq) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method MtrReport not implemented")
 }
 func (UnimplementedCollectorServer) mustEmbedUnimplementedCollectorServer() {}
 
@@ -159,42 +127,6 @@ func _Collector_TcpPingReport_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Collector_FpingReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FPingReportReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CollectorServer).FpingReport(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Collector_FpingReport_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CollectorServer).FpingReport(ctx, req.(*FPingReportReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Collector_MtrReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MTRReportReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CollectorServer).MtrReport(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Collector_MtrReport_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CollectorServer).MtrReport(ctx, req.(*MTRReportReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Collector_ServiceDesc is the grpc.ServiceDesc for Collector service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -209,14 +141,6 @@ var Collector_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TcpPingReport",
 			Handler:    _Collector_TcpPingReport_Handler,
-		},
-		{
-			MethodName: "FpingReport",
-			Handler:    _Collector_FpingReport_Handler,
-		},
-		{
-			MethodName: "MtrReport",
-			Handler:    _Collector_MtrReport_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
