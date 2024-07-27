@@ -19,16 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Collector_PingReport_FullMethodName    = "/collector_grpc.Collector/PingReport"
-	Collector_TcpPingReport_FullMethodName = "/collector_grpc.Collector/TcpPingReport"
+	Collector_ReportPingResult_FullMethodName    = "/collector_grpc.Collector/ReportPingResult"
+	Collector_ReportTcpPingResult_FullMethodName = "/collector_grpc.Collector/ReportTcpPingResult"
 )
 
 // CollectorClient is the client API for Collector service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CollectorClient interface {
-	PingReport(ctx context.Context, in *PingReportReq, opts ...grpc.CallOption) (*Empty, error)
-	TcpPingReport(ctx context.Context, in *TcpPingReportReq, opts ...grpc.CallOption) (*Empty, error)
+	ReportPingResult(ctx context.Context, in *GrpcPingReportReq, opts ...grpc.CallOption) (*Empty, error)
+	ReportTcpPingResult(ctx context.Context, in *GrpcTcpPingReportReq, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type collectorClient struct {
@@ -39,20 +39,20 @@ func NewCollectorClient(cc grpc.ClientConnInterface) CollectorClient {
 	return &collectorClient{cc}
 }
 
-func (c *collectorClient) PingReport(ctx context.Context, in *PingReportReq, opts ...grpc.CallOption) (*Empty, error) {
+func (c *collectorClient) ReportPingResult(ctx context.Context, in *GrpcPingReportReq, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
-	err := c.cc.Invoke(ctx, Collector_PingReport_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Collector_ReportPingResult_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *collectorClient) TcpPingReport(ctx context.Context, in *TcpPingReportReq, opts ...grpc.CallOption) (*Empty, error) {
+func (c *collectorClient) ReportTcpPingResult(ctx context.Context, in *GrpcTcpPingReportReq, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
-	err := c.cc.Invoke(ctx, Collector_TcpPingReport_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Collector_ReportTcpPingResult_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -63,8 +63,8 @@ func (c *collectorClient) TcpPingReport(ctx context.Context, in *TcpPingReportRe
 // All implementations must embed UnimplementedCollectorServer
 // for forward compatibility
 type CollectorServer interface {
-	PingReport(context.Context, *PingReportReq) (*Empty, error)
-	TcpPingReport(context.Context, *TcpPingReportReq) (*Empty, error)
+	ReportPingResult(context.Context, *GrpcPingReportReq) (*Empty, error)
+	ReportTcpPingResult(context.Context, *GrpcTcpPingReportReq) (*Empty, error)
 	mustEmbedUnimplementedCollectorServer()
 }
 
@@ -72,11 +72,11 @@ type CollectorServer interface {
 type UnimplementedCollectorServer struct {
 }
 
-func (UnimplementedCollectorServer) PingReport(context.Context, *PingReportReq) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PingReport not implemented")
+func (UnimplementedCollectorServer) ReportPingResult(context.Context, *GrpcPingReportReq) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReportPingResult not implemented")
 }
-func (UnimplementedCollectorServer) TcpPingReport(context.Context, *TcpPingReportReq) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TcpPingReport not implemented")
+func (UnimplementedCollectorServer) ReportTcpPingResult(context.Context, *GrpcTcpPingReportReq) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReportTcpPingResult not implemented")
 }
 func (UnimplementedCollectorServer) mustEmbedUnimplementedCollectorServer() {}
 
@@ -91,38 +91,38 @@ func RegisterCollectorServer(s grpc.ServiceRegistrar, srv CollectorServer) {
 	s.RegisterService(&Collector_ServiceDesc, srv)
 }
 
-func _Collector_PingReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PingReportReq)
+func _Collector_ReportPingResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GrpcPingReportReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CollectorServer).PingReport(ctx, in)
+		return srv.(CollectorServer).ReportPingResult(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Collector_PingReport_FullMethodName,
+		FullMethod: Collector_ReportPingResult_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CollectorServer).PingReport(ctx, req.(*PingReportReq))
+		return srv.(CollectorServer).ReportPingResult(ctx, req.(*GrpcPingReportReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Collector_TcpPingReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TcpPingReportReq)
+func _Collector_ReportTcpPingResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GrpcTcpPingReportReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CollectorServer).TcpPingReport(ctx, in)
+		return srv.(CollectorServer).ReportTcpPingResult(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Collector_TcpPingReport_FullMethodName,
+		FullMethod: Collector_ReportTcpPingResult_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CollectorServer).TcpPingReport(ctx, req.(*TcpPingReportReq))
+		return srv.(CollectorServer).ReportTcpPingResult(ctx, req.(*GrpcTcpPingReportReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -135,12 +135,12 @@ var Collector_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*CollectorServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "PingReport",
-			Handler:    _Collector_PingReport_Handler,
+			MethodName: "ReportPingResult",
+			Handler:    _Collector_ReportPingResult_Handler,
 		},
 		{
-			MethodName: "TcpPingReport",
-			Handler:    _Collector_TcpPingReport_Handler,
+			MethodName: "ReportTcpPingResult",
+			Handler:    _Collector_ReportTcpPingResult_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
