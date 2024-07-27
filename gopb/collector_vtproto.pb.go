@@ -109,7 +109,7 @@ func (m *GrpcPingResult) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *PingReportReq) MarshalVT() (dAtA []byte, err error) {
+func (m *GrpcPingReportReq) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -122,12 +122,12 @@ func (m *PingReportReq) MarshalVT() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *PingReportReq) MarshalToVT(dAtA []byte) (int, error) {
+func (m *GrpcPingReportReq) MarshalToVT(dAtA []byte) (int, error) {
 	size := m.SizeVT()
 	return m.MarshalToSizedBufferVT(dAtA[:size])
 }
 
-func (m *PingReportReq) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+func (m *GrpcPingReportReq) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	if m == nil {
 		return 0, nil
 	}
@@ -217,7 +217,7 @@ func (m *GrpcTcpPingResult) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *TcpPingReportReq) MarshalVT() (dAtA []byte, err error) {
+func (m *GrpcTcpPingReportReq) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -230,12 +230,12 @@ func (m *TcpPingReportReq) MarshalVT() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *TcpPingReportReq) MarshalToVT(dAtA []byte) (int, error) {
+func (m *GrpcTcpPingReportReq) MarshalToVT(dAtA []byte) (int, error) {
 	size := m.SizeVT()
 	return m.MarshalToSizedBufferVT(dAtA[:size])
 }
 
-func (m *TcpPingReportReq) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+func (m *GrpcTcpPingReportReq) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	if m == nil {
 		return 0, nil
 	}
@@ -247,8 +247,8 @@ func (m *TcpPingReportReq) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
-	if m.AgentID != 0 {
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(m.AgentID))
+	if m.AgentUID != 0 {
+		i = protohelpers.EncodeVarint(dAtA, i, uint64(m.AgentUID))
 		i--
 		dAtA[i] = 0x10
 	}
@@ -299,7 +299,7 @@ func (m *GrpcPingResult) SizeVT() (n int) {
 	return n
 }
 
-func (m *PingReportReq) SizeVT() (n int) {
+func (m *GrpcPingReportReq) SizeVT() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -340,7 +340,7 @@ func (m *GrpcTcpPingResult) SizeVT() (n int) {
 	return n
 }
 
-func (m *TcpPingReportReq) SizeVT() (n int) {
+func (m *GrpcTcpPingReportReq) SizeVT() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -352,8 +352,8 @@ func (m *TcpPingReportReq) SizeVT() (n int) {
 			n += 1 + l + protohelpers.SizeOfVarint(uint64(l))
 		}
 	}
-	if m.AgentID != 0 {
-		n += 1 + protohelpers.SizeOfVarint(uint64(m.AgentID))
+	if m.AgentUID != 0 {
+		n += 1 + protohelpers.SizeOfVarint(uint64(m.AgentUID))
 	}
 	n += len(m.unknownFields)
 	return n
@@ -538,7 +538,7 @@ func (m *GrpcPingResult) UnmarshalVT(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *PingReportReq) UnmarshalVT(dAtA []byte) error {
+func (m *GrpcPingReportReq) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -561,10 +561,10 @@ func (m *PingReportReq) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: PingReportReq: wiretype end group for non-group")
+			return fmt.Errorf("proto: GrpcPingReportReq: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: PingReportReq: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GrpcPingReportReq: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -770,7 +770,7 @@ func (m *GrpcTcpPingResult) UnmarshalVT(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *TcpPingReportReq) UnmarshalVT(dAtA []byte) error {
+func (m *GrpcTcpPingReportReq) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -793,10 +793,10 @@ func (m *TcpPingReportReq) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: TcpPingReportReq: wiretype end group for non-group")
+			return fmt.Errorf("proto: GrpcTcpPingReportReq: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: TcpPingReportReq: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GrpcTcpPingReportReq: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -835,9 +835,9 @@ func (m *TcpPingReportReq) UnmarshalVT(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AgentID", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field AgentUID", wireType)
 			}
-			m.AgentID = 0
+			m.AgentUID = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return protohelpers.ErrIntOverflow
@@ -847,7 +847,7 @@ func (m *TcpPingReportReq) UnmarshalVT(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.AgentID |= uint64(b&0x7F) << shift
+				m.AgentUID |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}

@@ -12,7 +12,7 @@ message GrpcPingResult {
   int64 SendAt = 4;
 }
 
-message PingReportReq {
+message GrpcPingReportReq {
   repeated GrpcPingResult Results = 1;
   uint64 AgentUID = 2;
 }
@@ -24,13 +24,13 @@ message GrpcTcpPingResult {
   int64 SendAt = 4;
 }
 
-message TcpPingReportReq {
+message GrpcTcpPingReportReq {
   repeated GrpcTcpPingResult Results = 1;
-  uint64 AgentID = 2;
+  uint64 AgentUID = 2;
 }
 
 
 service Collector {
-  rpc PingReport (PingReportReq) returns (Empty);
-  rpc TcpPingReport (TcpPingReportReq) returns (Empty);
+  rpc ReportPingResult (GrpcPingReportReq) returns (Empty);
+  rpc ReportTcpPingResult (GrpcTcpPingReportReq) returns (Empty);
 }
