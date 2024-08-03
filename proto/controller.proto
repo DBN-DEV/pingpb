@@ -52,5 +52,5 @@ message GrpcTcpPingTaskResp {
 service Controller {
   rpc Heartbeat (GrpcHeartbeatReq) returns (GrpcHeartbeatResp);
   rpc GetTcpPingTask (GrpcTaskReq) returns (GrpcTcpPingTaskResp);
-  rpc GetPingCommand (GrpcTaskReq) returns (GrpcPingTaskResp);
+  rpc GetPingTask (GrpcTaskReq) returns (GrpcPingTaskResp);
 }
