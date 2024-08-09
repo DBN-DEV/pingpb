@@ -21,7 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	Controller_Heartbeat_FullMethodName      = "/controller_grpc.Controller/Heartbeat"
 	Controller_GetTcpPingTask_FullMethodName = "/controller_grpc.Controller/GetTcpPingTask"
-	Controller_GetPingCommand_FullMethodName = "/controller_grpc.Controller/GetPingCommand"
+	Controller_GetPingTask_FullMethodName    = "/controller_grpc.Controller/GetPingTask"
 )
 
 // ControllerClient is the client API for Controller service.
@@ -30,7 +30,7 @@ const (
 type ControllerClient interface {
 	Heartbeat(ctx context.Context, in *GrpcHeartbeatReq, opts ...grpc.CallOption) (*GrpcHeartbeatResp, error)
 	GetTcpPingTask(ctx context.Context, in *GrpcTaskReq, opts ...grpc.CallOption) (*GrpcTcpPingTaskResp, error)
-	GetPingCommand(ctx context.Context, in *GrpcTaskReq, opts ...grpc.CallOption) (*GrpcPingTaskResp, error)
+	GetPingTask(ctx context.Context, in *GrpcTaskReq, opts ...grpc.CallOption) (*GrpcPingTaskResp, error)
 }
 
 type controllerClient struct {
@@ -61,10 +61,10 @@ func (c *controllerClient) GetTcpPingTask(ctx context.Context, in *GrpcTaskReq, 
 	return out, nil
 }
 
-func (c *controllerClient) GetPingCommand(ctx context.Context, in *GrpcTaskReq, opts ...grpc.CallOption) (*GrpcPingTaskResp, error) {
+func (c *controllerClient) GetPingTask(ctx context.Context, in *GrpcTaskReq, opts ...grpc.CallOption) (*GrpcPingTaskResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GrpcPingTaskResp)
-	err := c.cc.Invoke(ctx, Controller_GetPingCommand_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Controller_GetPingTask_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (c *controllerClient) GetPingCommand(ctx context.Context, in *GrpcTaskReq, 
 type ControllerServer interface {
 	Heartbeat(context.Context, *GrpcHeartbeatReq) (*GrpcHeartbeatResp, error)
 	GetTcpPingTask(context.Context, *GrpcTaskReq) (*GrpcTcpPingTaskResp, error)
-	GetPingCommand(context.Context, *GrpcTaskReq) (*GrpcPingTaskResp, error)
+	GetPingTask(context.Context, *GrpcTaskReq) (*GrpcPingTaskResp, error)
 	mustEmbedUnimplementedControllerServer()
 }
 
@@ -94,8 +94,8 @@ func (UnimplementedControllerServer) Heartbeat(context.Context, *GrpcHeartbeatRe
 func (UnimplementedControllerServer) GetTcpPingTask(context.Context, *GrpcTaskReq) (*GrpcTcpPingTaskResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTcpPingTask not implemented")
 }
-func (UnimplementedControllerServer) GetPingCommand(context.Context, *GrpcTaskReq) (*GrpcPingTaskResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPingCommand not implemented")
+func (UnimplementedControllerServer) GetPingTask(context.Context, *GrpcTaskReq) (*GrpcPingTaskResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPingTask not implemented")
 }
 func (UnimplementedControllerServer) mustEmbedUnimplementedControllerServer() {}
 func (UnimplementedControllerServer) testEmbeddedByValue()                    {}
@@ -154,20 +154,20 @@ func _Controller_GetTcpPingTask_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Controller_GetPingCommand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Controller_GetPingTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GrpcTaskReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ControllerServer).GetPingCommand(ctx, in)
+		return srv.(ControllerServer).GetPingTask(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Controller_GetPingCommand_FullMethodName,
+		FullMethod: Controller_GetPingTask_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ControllerServer).GetPingCommand(ctx, req.(*GrpcTaskReq))
+		return srv.(ControllerServer).GetPingTask(ctx, req.(*GrpcTaskReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -188,8 +188,8 @@ var Controller_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Controller_GetTcpPingTask_Handler,
 		},
 		{
-			MethodName: "GetPingCommand",
-			Handler:    _Controller_GetPingCommand_Handler,
+			MethodName: "GetPingTask",
+			Handler:    _Controller_GetPingTask_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
